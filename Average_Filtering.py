@@ -29,20 +29,6 @@ def read_ppm(input):
             for j, pixel in enumerate(pixel_row):
                 img_matrix[i][j] = int(pixel)
         return img_matrix
-"""
-def read_ppm(input):
-    im = Image.open('greyscale.png')
-    pixels = list(im.getdata())
-    width, height = im.size
-    pixels = [pixels[i * width:(i + 1) * width] for i in range(height)]
-    imgArray = []
-
-    for i in range(0,len(pixels)):
-        imgArray.append([])
-        for j in range(0,len(pixels[0])):
-            imgArray[i].append(pixels[i][j][0])
-    return imgArray
-"""
 
 def write_ppm(output, img_matrix):
     width = len(img_matrix[0])
@@ -75,3 +61,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    print("Filtering Done")
