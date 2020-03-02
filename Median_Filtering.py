@@ -1,26 +1,17 @@
 import sys
 import numpy
-from PIL import Image
 
 def apply_filter(img_matrix, filter_size):
+    print("Start Median Filtering " + str(filter_size)+"X"+str(filter_size))
     filtered_matrix = img_matrix[:]
-    #print(numpy.array(img_matrix)[len(img_matrix)-filter_size:len(img_matrix)+filter_size+1, len(img_matrix[0])-filter_size:len(img_matrix[0])+filter_size+1])
-    #print(numpy.array(img_matrix)[100:103, 100:103])
-    #print(numpy.mean(numpy.array(img_matrix)[100:103, 100:103],dtype=numpy.float32))
-    #https://www.coolutils.com/online/PPM-to-PNG#
-
-    for i in range(0,len(img_matrix)-filter_size):
-        print(i)
-        if(i==100):
-            break
-        else:
-            for j in range(0,len(img_matrix[0])-filter_size):
-                block = numpy.array(img_matrix)[i:i+filter_size, j:j+filter_size]
-                m = numpy.mean(block,dtype=numpy.float32)
-                filtered_matrix[i][j] = int(m)
-
-
     # TODO add your code here
+    for i in range(0,len(img_matrix)-filter_size):
+        print("Progress: "+ str(i) + " from "+str(len(img_matrix)))
+        for j in range(0,len(img_matrix[0])-filter_size):
+            block = numpy.array(img_matrix)[i:i+filter_size, j:j+filter_size]
+            m = numpy.median(block)
+            filtered_matrix[i][j] = int(m)
+
     return filtered_matrix
 
 def read_ppm(input):
@@ -36,20 +27,7 @@ def read_ppm(input):
             for j, pixel in enumerate(pixel_row):
                 img_matrix[i][j] = int(pixel)
         return img_matrix
-"""
-def read_ppm(input):
-    im = Image.open('greyscale.png')
-    pixels = list(im.getdata())
-    width, height = im.size
-    pixels = [pixels[i * width:(i + 1) * width] for i in range(height)]
-    imgArray = []
 
-    for i in range(0,len(pixels)):
-        imgArray.append([])
-        for j in range(0,len(pixels[0])):
-            imgArray[i].append(pixels[i][j][0])
-    return imgArray
-"""
 
 def write_ppm(output, img_matrix):
     width = len(img_matrix[0])
